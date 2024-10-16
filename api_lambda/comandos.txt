@@ -1,0 +1,29 @@
+aws lambda create-function \
+--function-name LambdaFunctionOverHttps \
+--zip-file fileb://function.zip \
+--handler LambdaFunctionOverHttps.lambda_handler \
+--runtime python3.12 \
+--role arn:aws:iam::370792723501:role/lambda-apigateway-role
+
+aws lambda invoke \
+--function-name LambdaFunctionOverHttps \
+--payload file://input.txt outputfile.txt \
+--cli-binary-format raw-in-base64-out
+
+curl https://ltqemll7p3.execute-api.us-east-1.amazonaws.com/test/DynamoDBManager \
+-d '{"operation": "create", "payload": {"Item": {"id": "5678EFGH", "number": 15}}}'
+
+curl https://ltqemll7p3.execute-api.us-east-1.amazonaws.com/test/DynamoDBManager -d \
+'{"operation": "read", "payload": {"Key": {"id": "5678EFGH"}}}'
+
+curl https://ltqemll7p3.execute-api.us-east-1.amazonaws.com/test/DynamoDBManager \
+-d '{"operation": "update", "payload": {"Key": {"id": "5678EFGH"}, "UpdateExpression": "SET #num = :new_value", "ExpressionAttributeNames": {"#num": "number"}, "ExpressionAttributeValues": {":new_value": 42}}}'
+
+curl https://ltqemll7p3.execute-api.us-east-1.amazonaws.com/test/DynamoDBManager \
+-d '{"operation": "read", "payload": {"Key": {"id": "5678EFGH"}}}'
+
+curl https://ltqemll7p3.execute-api.us-east-1.amazonaws.com/test/DynamoDBManager \
+-d '{"operation": "delete", "payload": {"Key": {"id": "5678EFGH"}}}'
+
+curl https://ltqemll7p3.execute-api.us-east-1.amazonaws.com/test/DynamoDBManager -d \
+'{"operation": "read", "payload": {"Key": {"id": "1234ABCD"}}}'
