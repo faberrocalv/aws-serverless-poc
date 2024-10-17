@@ -1,5 +1,0 @@
-aws cloudformation create-stack \
-    --stack-name testStack \
-    --template-body file://test.yaml \
-    --capabilities CAPABILITY_NAMED_IAM \
-    --region us-east-1

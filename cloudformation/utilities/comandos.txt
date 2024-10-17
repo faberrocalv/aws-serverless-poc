@@ -1,0 +1,5 @@
+aws cloudformation create-stack \
+    --stack-name attendee-register-stack \
+    --template-body file://attendee-register-stack.yaml \
+    --capabilities CAPABILITY_NAMED_IAM \
+    --region us-east-1
